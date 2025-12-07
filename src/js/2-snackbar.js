@@ -11,9 +11,8 @@ function createPromise(value, isPositive, delay) {
       } else {
         rej(value);
       }
-    });
-  }, delay);
-
+    }, delay);
+  });
   return promise;
 }
 

@@ -4,7 +4,6 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import errorIcon from '../img/errorIcon.svg';
-import closeBtn from '../img/closeBtn.svg';
 
 const refs = {
   enterDateTime: document.querySelector('#datetime-picker'),
@@ -59,12 +58,14 @@ const timer = {
     this.intervalId = setInterval(() => {
       const currentTime = new Date();
       const diffMS = userSelectedDate - currentTime;
-      const result = convertMs(diffMS);
-      addLeadingZero(result);
 
       if (diffMS < 1000) {
         this.stop();
+        return;
       }
+
+      const result = convertMs(diffMS);
+      addLeadingZero(result);
     }, 1000);
   },
 
@@ -72,8 +73,8 @@ const timer = {
     if (!this.isActive) return;
     this.isActive = false;
     clearInterval(this.intervalId);
-    refs.timeface.textContent = '00:00:00';
-    refs.startBtn.disabled = false;
+    addLeadingZero({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    refs.startBtn.disabled = true;
     refs.enterDateTime.disabled = false;
   },
 };
